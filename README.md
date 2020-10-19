@@ -3,4 +3,4 @@
 Instructions:
 
 - Run `yarn install`
-- Run `yarn ts-node index.ts`
+- Run `yarn jest`
