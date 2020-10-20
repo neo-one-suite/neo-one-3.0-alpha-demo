@@ -14,8 +14,9 @@ the NEO•ONE Client can read from a NEO•ONE v3.0 Node. More APIs are being de
 To run a NEO•ONE Node from this repo:
 
 - Run `npm install`
+- Build the `@neo-one/edge` module by running `cd node_modules/@neo-one/edge && npm install`
 - Edit the config file at `config.json` if necessary
-- Run `EDGE_USE_CORECLR=1 EDGE_APP_ROOT="node_modules/@neo-one/node-vm/lib/Debug/netcoreapp3.0 yarn neo-one-node --config <path/to/config.json>`
+- Run `EDGE_USE_CORECLR=1 EDGE_APP_ROOT=node_modules/@neo-one/node-vm/lib/Debug/netcoreapp3.0 npx neo-one-node --config <path/to/config.json>`
 
 To run a NEO•ONE Node from source:
 
