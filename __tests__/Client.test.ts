@@ -40,25 +40,10 @@ describe('Client Tests', () => {
     client = await setupClient();
   });
 
-  // test('__call', async () => {
-  //   const account = client.getCurrentUserAccount();
-  //   if (account === undefined) {
-  //     throw new Error('for ts');
-  //   }
-
-  //   const result = await client.__call(
-  //     'testnet',
-  //     crypto.scriptHashToAddress({ addressVersion: common.NEO_ADDRESS_VERSION, scriptHash: common.nativeHashes.GAS }),
-  //     'balanceOf',
-  //     [account.id.address],
-  //   );
-
-  //   console.log(result);
-  // });
-
   test('getAccount', async () => {
     const result = await client.getAccount({ network: 'testnet', address });
 
-    console.log(result);
+    expect(result.address).toEqual(address);
+    expect(result.balances).toEqual({});
   });
 });

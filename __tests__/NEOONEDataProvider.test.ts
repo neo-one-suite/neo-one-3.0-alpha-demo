@@ -1,86 +1,58 @@
-import { NEOONEDataProvider, scriptHashToAddress } from '@neo-one/client';
-import { addressToScriptHash, crypto, common, ScriptBuilder } from '@neo-one/client-common'
+import { NEOONEDataProvider } from '@neo-one/client';
+import { addressToScriptHash, crypto, common, ScriptBuilder, FeelessTransactionModel } from '@neo-one/client-common'
 
 describe('NEOONEDataProvider Tests', () => {
-  let provider: NEOONEDataProvider;
-  beforeEach(async () => {
-    provider = new NEOONEDataProvider({ network: 'testnet', rpcURL: 'https://staging.neotracker.io/rpc' });
-  });
+  const provider = new NEOONEDataProvider({ network: 'testnet', rpcURL: 'https://staging.neotracker.io/rpc' });
 
-  // const address = 'NSuX7PdXJLwUB7zboGor3X2C2eHswdM3t9';
-  const address = scriptHashToAddress('0x7c2958a69d04f7b336e9a3e16618e9aa545934ef');
-
-  test('Can get the unclaimed GAS available for a specified address', async () => {
-    const unclaimedGas = await provider.getUnclaimed(address);
-
-    console.log(`Unclaimed GAS available:`);
-    console.log(unclaimedGas);
-  });
-
-//   test('Can test invoke a script', async () => {
-//       const script = new ScriptBuilder().emitAppCall(common.stringToUInt160(addressToScriptHash(crypto.scriptHashToAddress({ addressVersion: common.NEO_ADDRESS_VERSION, scriptHash: common.nativeHashes.GAS }))), 'balanceOf', [address]);
-//       const transaction = new FeelessTransactionModel({script});
-//       const receipt = await provider.testInvoke(transaction);
-
-//       console.log(`Invoke receipt:`);
-//       console.log(receipt);
-//   });
+  // Substitute address here with an address that's known to have token balances
+  const address = 'NTZJ91cwZWiad8uj8sLMF7X6j8Ed41Cim6';
 
   test('Can get a block', async () => {
       const block = await provider.getBlock(1);
 
-      console.log(`Genesis block:`);
-      console.log(block);
+      expect(block).toBeDefined();
+      expect(block.hash).toEqual('0x8f30c34a8a8ef997155aa4a0ef6664d872a127ecc3bb6a85b7bbc55d6d9912f5');
+      expect(block.nextConsensus).toEqual('NgPkjjLTNcQad99iRYeXRUuowE4gxLAnDL');
+      expect(block.transactions).toEqual([]);
   })
 
   test('Can iter blocks as they are persisted', async () => {
-      const currentBlockCount = await provider.getBlockCount();
-      const iterable = provider.iterBlocks({ indexStart: currentBlockCount + 1 });
-
-      // Test here
+      const iterable = provider.iterBlocks({ indexStart: 1 });
+      expect(iterable).toBeDefined();
   });
 
   test('Can get best Block hash', async () => {
       const hash = await provider.getBestBlockHash();
 
-      console.log(`Best block hash is: ${hash}`);
+      expect(hash).toBeDefined();
+      expect(common.isUInt256(common.stringToUInt256(hash))).toBeTruthy();
   });
 
   test('Can get current blockchain height', async () => {
       const height = await provider.getBlockCount();
 
-      console.log(`Current height: ${height}`);
+      expect(height).toBeGreaterThan(343361);
   });
-
-  // test('Can get a contract', async () => {
-  //     const contract = await provider.getContract(crypto.scriptHashToAddress({ addressVersion: common.NEO_ADDRESS_VERSION, scriptHash: common.nativeHashes.NEO }));
-
-  //     console.log(`NEO Contract:`);
-  //     console.log(contract);
-  // });
 
   test('Can get the mempool', async () => {
       const mempool = await provider.getMemPool();
 
-      console.log(`Current mempool:`);
-      console.log(mempool);
+      expect((mempool as any).height).toBeGreaterThan(343360);
+      expect((mempool as any).verified).toBeDefined();
   });
-
-//   test('Can get a transaction', async () => {
-//       const transaction = await provider.getTransaction()
-//   });
 
   test('Can get connected peers', async () => {
       const peers = await provider.getConnectedPeers();
 
-      console.log(`Peers:`);
-      console.log(peers);
+      expect(peers.length).toBeGreaterThan(0);
+      expect(peers[0]).toBeDefined();
+      expect(peers[0].port).toEqual(20333);
   });
 
-  // test('Can get account balances', async () => {
-  //     const account = await provider.getAccount(address);
+  test('Can get account balances', async () => {
+      const account = await provider.getAccount(address);
 
-  //     console.log(`Account:`);
-  //     console.log(account);
-  // });
+      expect(account.address).toEqual(address);
+      expect(account.balances).toEqual({});
+  });
 });
