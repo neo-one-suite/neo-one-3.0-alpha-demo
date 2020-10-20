@@ -1,5 +1,7 @@
 import { LocalKeyStore, LocalMemoryStore, LocalUserAccountProvider, Client, NEOONEProvider } from '@neo-one/client';
-import { common, crypto } from '@neo-one/client-common'
+import { common, crypto, scriptHashToAddress } from '@neo-one/client-common'
+
+const address = scriptHashToAddress('0x7c2958a69d04f7b336e9a3e16618e9aa545934ef')
 
 describe('Client Tests', () => {
   const createUserAccountProvider = async () => {
@@ -55,7 +57,7 @@ describe('Client Tests', () => {
   // });
 
   test('getAccount', async () => {
-    const result = await client.getAccount({ network: 'testnet', address: 'NSuX7PdXJLwUB7zboGor3X2C2eHswdM3t9' });
+    const result = await client.getAccount({ network: 'testnet', address });
 
     console.log(result);
   });

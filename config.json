@@ -1,0 +1,51 @@
+{
+    "telemetry": {
+        "logging": {
+            "level": "debug"
+        }
+    },
+    "blockchain": "test",
+    "rpc": {
+        "http": {
+            "host": "0.0.0.0",
+            "port": 8080
+        },
+        "liveHealthCheck": {
+            "rpcURLs": [
+                "http://seed1t.neo.org:20332",
+                "http://seed2t.neo.org:20332",
+                "http://seed3t.neo.org:20332",
+                "http://seed4t.neo.org:20332",
+                "http://seed5t.neo.org:20332"
+            ]
+        },
+        "readyHealthCheck": {
+            "rpcURLs": [
+                "http://seed1t.neo.org:20332",
+                "http://seed2t.neo.org:20332",
+                "http://seed3t.neo.org:20332",
+                "http://seed4t.neo.org:20332",
+                "http://seed5t.neo.org:20332"
+            ],
+            "offset": 2
+        }
+    },
+    "node": {
+        "rpcURLs": [
+            "http://seed1t.neo.org:20332",
+            "http://seed2t.neo.org:20332",
+            "http://seed3t.neo.org:20332",
+            "http://seed4t.neo.org:20332",
+            "http://seed5t.neo.org:20332"
+        ]
+    },
+    "network": {
+        "seeds": [
+            "http://seed1t.neo.org:20332",
+            "http://seed2t.neo.org:20332",
+            "http://seed3t.neo.org:20332",
+            "http://seed4t.neo.org:20332",
+            "http://seed5t.neo.org:20332"
+        ]
+    }
+}

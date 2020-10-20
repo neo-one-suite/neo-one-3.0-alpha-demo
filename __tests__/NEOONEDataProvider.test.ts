@@ -1,4 +1,4 @@
-import { NEOONEDataProvider } from '@neo-one/client';
+import { NEOONEDataProvider, scriptHashToAddress } from '@neo-one/client';
 import { addressToScriptHash, crypto, common, ScriptBuilder } from '@neo-one/client-common'
 
 describe('NEOONEDataProvider Tests', () => {
@@ -7,7 +7,8 @@ describe('NEOONEDataProvider Tests', () => {
     provider = new NEOONEDataProvider({ network: 'testnet', rpcURL: 'https://staging.neotracker.io/rpc' });
   });
 
-  const address = 'NSuX7PdXJLwUB7zboGor3X2C2eHswdM3t9';
+  // const address = 'NSuX7PdXJLwUB7zboGor3X2C2eHswdM3t9';
+  const address = scriptHashToAddress('0x7c2958a69d04f7b336e9a3e16618e9aa545934ef');
 
   test('Can get the unclaimed GAS available for a specified address', async () => {
     const unclaimedGas = await provider.getUnclaimed(address);
